@@ -36,9 +36,6 @@ var(
 	userScheme    = configs.DBConf.Scheme.User
 )
 
-//var  database  = "edgex-ui-go"
-//var  dbUserName  = "su"
-//var  dbPassword  = "su"
 
 
 type DataStore struct {
@@ -75,4 +72,28 @@ func DBConnect() bool {
 	log.Println("Success connect to mongoDB !")
 
 	return true
+}
+ 
+func MYDBConnect() bool {
+        mongoAddr := fmt.Sprintf("%s:%d", configs.DBConf.Host, configs.DBConf.Port)
+	session, err := mgo.Dial(mongoAddr) 
+	if err != nil {
+//		panic(err)
+		log.Println("connect to mongodb failed!!")
+		return false
+	}
+        
+	log.Println("Success connect to mongoDB !")
+	log.Println(session)
+	DS.S = session 
+        return true
+
+}
+
+func Test() []map[string]interface{} {
+	c := DS.S.DB("test").C("car")
+	var result []map[string]interface{}
+	c.Find(nil).All(&result) //查询全部
+//	fmt.Println(result)
+	return  result
 }

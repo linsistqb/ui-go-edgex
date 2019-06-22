@@ -20,6 +20,7 @@ import (
 	_ "net/http/pprof"
 	"strconv"
 	"time"
+	"fmt"
 
 	"github.com/edgexfoundry/edgex-ui-go/app"
 	"github.com/edgexfoundry/edgex-ui-go/app/common"
@@ -35,10 +36,13 @@ func main() {
 		log.Printf("Load config failed. Error:%v\n", err)
 		return
 	}
-	ok := mongo.DBConnect()
+
+	ok := mongo.MYDBConnect()
 	if !ok {
 		mm.DBConnect()
 	}
+	 mylog := mongo.Test()
+	fmt.Println(mylog)
 
 	r := app.InitRestRoutes()
 
