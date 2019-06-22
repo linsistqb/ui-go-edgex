@@ -25,15 +25,21 @@ import (
 	mgo "gopkg.in/mgo.v2"
 )
 
-var (
+
+var(
 	database      = configs.DBConf.Name
 	dbHost        = configs.DBConf.Host
-	dbPort        = configs.DBConf.Port
+	dbPort	      = configs.DBConf.Port
 	dbUserName    = configs.DBConf.Username
 	dbPassword    = configs.DBConf.Password
 	gatewayScheme = configs.DBConf.Scheme.Gateway
 	userScheme    = configs.DBConf.Scheme.User
 )
+
+//var  database  = "edgex-ui-go"
+//var  dbUserName  = "su"
+//var  dbPassword  = "su"
+
 
 type DataStore struct {
 	S *mgo.Session
@@ -46,7 +52,12 @@ func (ds DataStore) DataStore() *DataStore {
 }
 
 func DBConnect() bool {
-	mongoAddress := fmt.Sprintf("%s:%d", dbHost, dbPort)
+	log.Println("configs.DBConf.Name: :",configs.DBConf.Name)
+	log.Printf("configs.DBConf.Host  :%s",configs.DBConf.Username)
+	log.Printf("configs.DBConf.Port :%s",configs.DBConf.Password);
+//	log.Println("configs : %s", database)	
+//	mongoAddress := fmt.Sprintf("%s:%d", "localhost", 27017)
+	mongoAddress := fmt.Sprintf("%s:%d", configs.DBConf.Host, configs.DBConf.Port)
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{mongoAddress},
 		Timeout:  time.Duration(5000) * time.Millisecond,

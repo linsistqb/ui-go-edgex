@@ -106,8 +106,10 @@ func LoadConfig(confFilePath string) error {
 		log.Printf("Decode Config File Error:%v", err)
 		return err
 	}
+
 	ServerConf = conf.Server
 	DBConf = conf.DB
+//	log.Printf("hello world %s",DBConf)
 	ProxyConf = conf.Proxy
 	initProxyMapping()
 	return nil

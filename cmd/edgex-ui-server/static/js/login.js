@@ -13,7 +13,8 @@
  *
  * @author: Huaqiao Zhang, <huaqiaoz@vmware.com>
  *******************************************************************************/
- 
+window.console.log("hello world");
+
 function login() {
     var name = $("#userName").val();
     var pwd = $("#userPwd").val();
@@ -26,10 +27,12 @@ function login() {
             'password': pwd
         }),
         success: function(data) {
+	    alert(data);
             window.sessionStorage.setItem("X_Session_Token", data)
             window.location.href = '/?X-Session-Token=' + data;
             var selectedGateway = JSON.parse(window.sessionStorage.getItem('selectedGateway'))
-            if (selectedGateway) {
+            
+	      if (selectedGateway) {
                 var addr = {
                     "hostIP": selectedGateway.address
                 };
