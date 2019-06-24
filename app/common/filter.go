@@ -49,6 +49,7 @@ func AuthFilter(h http.Handler) http.Handler {
 			strings.HasSuffix(path, JsSuffix) ||
 			strings.HasSuffix(path, JsonSuffix) ||
 			strings.HasPrefix(path, VendorsPath) ||
+			strings.HasPrefix(path, QIcon) ||
 			strings.HasPrefix(path, DataPathPrefix) {
 
 			http.FileServer(http.Dir(configs.ServerConf.StaticResourcesPath)).ServeHTTP(w, r)
