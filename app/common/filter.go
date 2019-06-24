@@ -71,8 +71,9 @@ func AuthFilter(h http.Handler) http.Handler {
 			token = r.Header.Get(SessionTokenKey)
 		}
 
-		_, isValid := TokenCache[token]
+//		_, isValid := TokenCache[token]
 
+/*
 		if (token == "") || !(isValid) {
 			if r.Header.Get(AjaxRequestHeader) != "" &&
 				r.Header.Get(AjaxRequestHeader) == AjaxRequestIdentifier {
@@ -83,7 +84,7 @@ func AuthFilter(h http.Handler) http.Handler {
 			http.Redirect(w, r, LoginHtmlPage, RedirectHttpCode)
 			return
 		}
-
+*/
 		for prefix, _ := range configs.ProxyMapping {
 			if strings.HasPrefix(path, prefix) {
 				path = strings.TrimPrefix(path, prefix)

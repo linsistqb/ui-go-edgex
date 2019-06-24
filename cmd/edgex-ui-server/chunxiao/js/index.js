@@ -25,9 +25,7 @@
         var p=[];
 
 
-        function clock()
-
-        {
+        function clock() {
             //3.从AJAX获取数据
  /*
                 $.get("dat.asp"
@@ -41,6 +39,14 @@
                     }
                 });
 */
+            $.ajax({
+                url: '/api/v1/myauth/debug',
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+
             for(i = 0;i < 90; i++)
             {
                 p[i] = 250;
