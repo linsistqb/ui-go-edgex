@@ -84,7 +84,7 @@ func MYDBConnect() bool {
 	}
         
 	log.Println("Success connect to mongoDB !")
-	log.Println(session)
+//	log.Println(session)
 	DS.S = session 
         return true
 

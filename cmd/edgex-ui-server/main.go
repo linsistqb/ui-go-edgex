@@ -20,7 +20,7 @@ import (
 	_ "net/http/pprof"
 	"strconv"
 	"time"
-	"fmt"
+//	"fmt"
 
 	"github.com/edgexfoundry/edgex-ui-go/app"
 	"github.com/edgexfoundry/edgex-ui-go/app/common"
@@ -41,8 +41,9 @@ func main() {
 	if !ok {
 		mm.DBConnect()
 	}
-	 mylog := mongo.Test()
-	fmt.Println(mylog)
+
+//	 mylog := mongo.Test()
+//	fmt.Println(mylog)
 
 	r := app.InitRestRoutes()
 
