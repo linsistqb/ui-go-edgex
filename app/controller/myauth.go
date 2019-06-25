@@ -17,7 +17,7 @@
 package controller
 
 import (
-//	"encoding/json"
+	"encoding/json"
     	"fmt"
 	"log"
 	"net/http"
@@ -36,10 +36,56 @@ const (
 
 func Debug(w http.ResponseWriter, r *http.Request){
     log.Println("Dbug  !!!!!!!!!!!!!!!!!!")
-    var result []map[string]interface{}
-    result = mongo.FindDB("test","car")
-    fmt.Println(result)
-    w.Write([]byte("hello world"))
+    var	cleanweightResult []map[string]interface{}
+    cleanweightResult = mongo.FindDB("test","cleanweight")
+    fmt.Println(cleanweightResult)
+
+    var	colorweightResult []map[string]interface{}
+    colorweightResult = mongo.FindDB("test","colorweight")
+    fmt.Println(colorweightResult)
+    fmt.Println(colorweightResult)
+   /* mapString := make(map[string]string)
+    for key,value := range result[0]{
+	strkey := fmt.Sprintf("%v",key)
+	strvalue := fmt.Sprintf("%v",value)
+	mapString[strkey]= strvalue
+    }
+
+    fmt.Println(mapString["BS11_5"])
+
+    resultOne := make(map[string]interface{})
+    resultOne = result[0]
+    str, err := json.Marshal(resultOne)
+    if err != nil {
+        fmt.Println(err)
+    }
+    fmt.Println(str)
+*/
+//    fmt.Println(result._id);
+
+    result, _ := json.Marshal(&cleanweightResult)
+    w.Write(result)
+   // fmt.Println(result[0]["_id"])
+
+/*
+    for k,v := range result{
+
+    dataJson := make(v)
+    str,err := json.Marshal(dataJson)
+    if err != nil {
+        fmt.Println(err)
+    }
+	
+    fmt.Println(v)
+    fmt.Println(k)
+}
+
+    fmt.Println("********************")
+    fmt.Println(dataJson)
+    w.Write([]byte(dataJson))
+    fmt.Println(result[0])
+*/
+   // w.Write([]byte(result[0]["BS11_2"]))
 }
 /*
 func Login(w http.ResponseWriter, r *http.Request) {

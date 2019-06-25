@@ -101,7 +101,9 @@ func Test() []map[string]interface{} {
 func FindDB(dbname string ,collections string )[]map[string]interface{} {
           c := DS.S.DB(dbname).C(collections)
           var result []map[string]interface{}
-          c.Find(nil).All(&result) //查询全部
+  //      c.Find(nil).All(&result) //查询全部
   //      fmt.Println(result)
+
+          c.Find(nil).Sort("-_id").Limit(1).All(&result) //查询全部
           return  result
 }
