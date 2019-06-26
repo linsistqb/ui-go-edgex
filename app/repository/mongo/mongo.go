@@ -23,6 +23,7 @@ import (
 
 	"github.com/edgexfoundry/edgex-ui-go/app/configs"
 	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 
@@ -104,6 +105,6 @@ func FindDB(dbname string ,collections string )[]map[string]interface{} {
   //      c.Find(nil).All(&result) //查询全部
   //      fmt.Println(result)
 
-          c.Find(nil).Sort("-_id").Limit(1).All(&result) //查询全部
+          c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) //查询全部
           return  result
 }

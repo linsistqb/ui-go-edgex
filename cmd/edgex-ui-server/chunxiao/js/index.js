@@ -46,7 +46,7 @@
                     console.log(data);
 		    var obj = JSON.parse(data);
 		    console.log(obj)
-		    console.log(obj[0].BS11_2)
+		    console.log(obj.BS11_2)
                 }
             });
 

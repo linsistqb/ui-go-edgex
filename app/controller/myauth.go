@@ -38,21 +38,35 @@ func Debug(w http.ResponseWriter, r *http.Request){
     log.Println("Dbug  !!!!!!!!!!!!!!!!!!")
     var	cleanweightResult []map[string]interface{}
     cleanweightResult = mongo.FindDB("test","cleanweight")
-    fmt.Println(cleanweightResult)
+   // fmt.Println(cleanweightResult)
 
     var	colorweightResult []map[string]interface{}
     colorweightResult = mongo.FindDB("test","colorweight")
-    fmt.Println(colorweightResult)
-    fmt.Println(colorweightResult)
-   /* mapString := make(map[string]string)
-    for key,value := range result[0]{
+ //   fmt.Println(colorweightResult)
+ 
+    cleanResult := make(map[string]interface{})
+    cleanResult = cleanweightResult[0]
+ 
+    mapString := make(map[string]string)
+    for key,value := range cleanResult{
 	strkey := fmt.Sprintf("%v",key)
 	strvalue := fmt.Sprintf("%v",value)
 	mapString[strkey]= strvalue
     }
 
-    fmt.Println(mapString["BS11_5"])
+     colorResult := make(map[string]interface{})
+     colorResult = colorweightResult[0]
 
+//  fmt.Println(mapString[0]["BS11_5"])
+ 
+     for key2,value2 := range colorResult{
+          strkey2 := fmt.Sprintf("%v",key2)
+          strvalue2 := fmt.Sprintf("%v",value2)
+          mapString[strkey2]= strvalue2
+      }
+
+    fmt.Println(mapString)
+/*
     resultOne := make(map[string]interface{})
     resultOne = result[0]
     str, err := json.Marshal(resultOne)
@@ -63,8 +77,11 @@ func Debug(w http.ResponseWriter, r *http.Request){
 */
 //    fmt.Println(result._id);
 
-    result, _ := json.Marshal(&cleanweightResult)
-    w.Write(result)
+    result1, _ := json.Marshal(&mapString)
+//    result2, _ := json.Marshal(&colorweightResult)
+    //fmt.Println(result1)
+    w.Write(result1)
+   // w.Write(result2)
    // fmt.Println(result[0]["_id"])
 
 /*
