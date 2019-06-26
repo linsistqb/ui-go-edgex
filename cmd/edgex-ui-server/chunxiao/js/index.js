@@ -40,7 +40,7 @@
                 });
 */
             $.ajax({
-                url: '/api/v1/myauth/debug',
+                url: '/api/v1/myauth/weight',
                 type: 'GET',
                 success: function (data) {
                     console.log(data);

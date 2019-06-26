@@ -107,3 +107,12 @@ func FindWeightDB(dbname string ,collections string )[]map[string]interface{} {
     c.Find(nil).Sort("-_id").Limit(1).All(&result)       
           return  result
 }
+func FindWeightDBOne(dbname string ,collections string )map[string]interface{} {
+    c := DS.S.DB(dbname).C(collections)
+          var result map[string]interface{}
+          
+ // fmt.Println(result)
+ // c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
+    c.Find(nil).Sort("-_id").Limit(1).One(&result)       
+          return  result
+}

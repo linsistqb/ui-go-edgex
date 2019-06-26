@@ -69,3 +69,19 @@ func Debug(w http.ResponseWriter, r *http.Request){
 
 
 
+func Weight( w http.ResponseWriter, r *http.Request){
+//	log.Println("weight !!!")
+	resultString := make(map[string]string)
+ 
+	var cleanweightResult map[string]interface{}
+	cleanweightResult = mongo.FindWeightDBOne("test","cleanweight")
+	
+	for key, value := range cleanweightResult{
+		strkey := fmt.Sprintf("%v",key)
+		strvalue := fmt.Sprintf("%v",value) 
+		resultString[strkey] = strvalue
+	}
+	result, _ := json.Marshal(&resultString)
+	w.Write(result)
+}
+
