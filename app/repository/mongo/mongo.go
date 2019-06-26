@@ -23,7 +23,7 @@ import (
 
 	"github.com/edgexfoundry/edgex-ui-go/app/configs"
 	mgo "gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
+//	"gopkg.in/mgo.v2/bson"
 )
 
 
@@ -53,8 +53,7 @@ func DBConnect() bool {
 	log.Println("configs.DBConf.Name: :",configs.DBConf.Name)
 	log.Printf("configs.DBConf.Host  :%s",configs.DBConf.Username)
 	log.Printf("configs.DBConf.Port :%s",configs.DBConf.Password);
-//	log.Println("configs : %s", database)	
-//	mongoAddress := fmt.Sprintf("%s:%d", "localhost", 27017)
+    
 	mongoAddress := fmt.Sprintf("%s:%d", configs.DBConf.Host, configs.DBConf.Port)
 	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:    []string{mongoAddress},
@@ -76,16 +75,16 @@ func DBConnect() bool {
 }
  
 func MYDBConnect() bool {
-        mongoAddr := fmt.Sprintf("%s:%d", configs.DBConf.Host, configs.DBConf.Port)
+    mongoAddr := fmt.Sprintf("%s:%d", configs.DBConf.Host, configs.DBConf.Port)
 	session, err := mgo.Dial(mongoAddr) 
 	if err != nil {
-//		panic(err)
 		log.Println("connect to mongodb failed!!")
 		return false
-	}
-        
-	log.Println("Success connect to mongoDB !")
+	}  
+    
+	log.Println("Success connect to mongoDB !")  
 //	log.Println(session)
+
 	DS.S = session 
         return true
 
@@ -94,17 +93,17 @@ func MYDBConnect() bool {
 func Test() []map[string]interface{} {
 	c := DS.S.DB("test").C("car")
 	var result []map[string]interface{}
-	c.Find(nil).All(&result) //查询全部
-//	fmt.Println(result)
+	c.Find(nil).All(&result) 
+
 	return  result
 }
 
-func FindDB(dbname string ,collections string )[]map[string]interface{} {
-          c := DS.S.DB(dbname).C(collections)
+func FindWeightDB(dbname string ,collections string )[]map[string]interface{} {
+    c := DS.S.DB(dbname).C(collections)
           var result []map[string]interface{}
-  //      c.Find(nil).All(&result) //查询全部
-  //      fmt.Println(result)
-
-          c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) //查询全部
+          
+ // fmt.Println(result)
+ // c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
+    c.Find(nil).Sort("-_id").Limit(1).All(&result)       
           return  result
 }
