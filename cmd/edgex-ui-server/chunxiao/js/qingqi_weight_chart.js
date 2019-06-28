@@ -1,8 +1,6 @@
 
-var time = 1000;
-self.setInterval("clock()", time); 
-
-function clock(){
+qingqi();
+function qingqi(){
     $.ajax({
             url: '/api/v1/myauth/weight',
             type: 'GET',
@@ -30,7 +28,7 @@ function clock(){
                             }
                         },
                         legend: {
-                            data:['左侧过车','右侧过车','左侧重量','右侧重量']
+                            data:['左侧重量','右侧重量']
                         },
                         xAxis: [
                             {
@@ -44,19 +42,19 @@ function clock(){
                         yAxis: [
                             {
                                 type: 'value',
-                                name: '水量',
-                                min: 0,
-                                max: 4500,
-                                interval: 500,
+                                name: '重量',
+                                min: 220,
+                                max: 320,
+                                interval: 10,
                                 axisLabel: {
-                                    formatter: '{value} 辆'
+                                    formatter: '{value} Kg'
                                 }
                             },
                             {
                                 type: 'value',
-                                name: '温度',
+                                name: '重量',
                                 min: 220,
-                                max: 300,
+                                max: 320,
                                 interval: 10,
                                 axisLabel: {
                                     formatter: '{value} Kg'
@@ -65,34 +63,23 @@ function clock(){
                         ],
                         series: [
                             {
-                                name:'左侧过车',
-                                type:'bar',
-                                data:[obj.BS1_1, 3568, 3568,3568, 3568, 3568, 3568, 3568, 3568, 2893, 2893, 4223,4223, 2893]
-                            },
-                            {
-                                name:'右侧过车',
-                                type:'bar',
-                                data:[3231, 3863, 3863, 3863, 3863, 3863, 3568, 3231,2893,3863,3863, 3863,3863,3863]
-                            },
-                            {
                                 name:'左侧重量',
-                                type:'line',
-                                yAxisIndex: 1,
-                                data:[253, 251, 262, 264, 251, 265, 263, 275, 279, 282, 263, 258,252,248]
+                                type:'bar',
+                                data:[obj.BS11_1, obj.BS11_2, obj.BS11_3, obj.BS11_4, obj.BS11_5, obj.BS13_1, obj.BS13_2, obj.BS13_3, obj.BS13_4, obj.BS13_5, obj.BS15_1, obj.BS15_2, obj.BS15_3, obj.BS15_4]
                             },
                             {
                                 name:'右侧重量',
-                                type:'line',
-                                yAxisIndex: 1,
-                                data:[250, 253, 269, 272, 297, 272, 266, 275, 278, 276, 279, 259,254,250]
+                                type:'bar',
+                                data:[obj.BS12_1, obj.BS12_2, obj.BS12_3, obj.BS12_4, obj.BS12_5, obj.BS14_1, obj.BS14_2, obj.BS14_3, obj.BS14_4, obj.BS14_5, obj.BS16_1, obj.BS16_2, obj.BS16_3, obj.BS16_4]                                                     
                             }
+
                         ]
                     };
                  myChart.setOption(option);
             }
         });  
+
 }
-  
         
 
 
