@@ -25,7 +25,13 @@ import (
 	"github.com/edgexfoundry/edgex-ui-go/app/repository/mongo"
 )
 
-
+const (
+	dbName  = "train"
+	cleanWeight = "cleanweight"
+	colorWeight = "colorweight"
+	car        = "car"
+	myData  = "date"
+)
 
 func Debug(w http.ResponseWriter, r *http.Request){
     
@@ -74,9 +80,18 @@ func Weight( w http.ResponseWriter, r *http.Request){
 	resultString := make(map[string]string)
  
 	var cleanweightResult map[string]interface{}
-	cleanweightResult = mongo.FindWeightDBOne("test","cleanweight")
+	cleanweightResult = mongo.FindWeightDBOne(dbName,cleanWeight)
 	
 	for key, value := range cleanweightResult{
+		strkey := fmt.Sprintf("%v",key)
+		strvalue := fmt.Sprintf("%v",value) 
+		resultString[strkey] = strvalue
+	}
+
+	var colorweightResult map[string]interface{}
+	colorweightResult = mongo.FindWeightDBOne(dbName,colorWeight)
+	
+	for key, value := range colorweightResult{
 		strkey := fmt.Sprintf("%v",key)
 		strvalue := fmt.Sprintf("%v",value) 
 		resultString[strkey] = strvalue
@@ -85,3 +100,20 @@ func Weight( w http.ResponseWriter, r *http.Request){
 	w.Write(result)
 }
 
+func Proportion(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+	log.Println("Proportion!!")
+	m := make (map[string]string)
+	err := json.NewDecoder(r.Body).Decode(&m)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusServiceUnavailable)
+		return
+	}
+	data := m[myData]
+	fmt.Println(data)
+
+        var proportionResult map[string]interface{}
+        proportionResult = mongo.FindWeightDBSelectOne(dbName,car,data)
+	fmt.Println(proportionResult)
+
+}

@@ -23,7 +23,7 @@ import (
 
 	"github.com/edgexfoundry/edgex-ui-go/app/configs"
 	mgo "gopkg.in/mgo.v2"
-//	"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 
@@ -102,17 +102,26 @@ func FindWeightDB(dbname string ,collections string )[]map[string]interface{} {
     c := DS.S.DB(dbname).C(collections)
           var result []map[string]interface{}
           
- // fmt.Println(result)
  // c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
     c.Find(nil).Sort("-_id").Limit(1).All(&result)       
           return  result
 }
+
 func FindWeightDBOne(dbname string ,collections string )map[string]interface{} {
+    c := DS.S.DB(dbname).C(collections)
+          var result map[string]interface{}
+          
+    c.Find(nil).Sort("-_id").Limit(1).One(&result)       
+          return  result
+}
+
+
+func FindWeightDBSelectOne(dbname,collections,data string )map[string]interface{} {
     c := DS.S.DB(dbname).C(collections)
           var result map[string]interface{}
           
  // fmt.Println(result)
  // c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
-    c.Find(nil).Sort("-_id").Limit(1).One(&result)       
+    c.Find(bson.M{"dateStr":data}).One(&result)       
           return  result
 }
