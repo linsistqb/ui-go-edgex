@@ -116,4 +116,6 @@ func Proportion(w http.ResponseWriter, r *http.Request){
         proportionResult = mongo.FindWeightDBSelectOne(dbName,car,data)
 	fmt.Println(proportionResult)
 
+	result, _ := json.Marshal(&proportionResult)
+        w.Write(result)
 }
