@@ -121,7 +121,16 @@ func FindWeightDBSelectOne(dbname,collections,data string )map[string]interface{
           var result map[string]interface{}
           
  // fmt.Println(result)
- // c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
+ //c.Find(nil).Select(bson.M{"dateStr":0,"_id":0}).Sort("-_id").Limit(1).All(&result) 
     c.Find(bson.M{"dateStr":data}).One(&result)       
           return  result
+}
+
+func FindAListCartonsDifferentPressure(dbname,collections,startTime,endTime, cartons string)[]map[string]interface{}{
+ 	c := DS.S.DB(dbname).C(collections)
+	var result []map[string]interface{}
+	c.Find(bson.M{"dateStr":bson.M{"$gte": startTime,"$lte": endTime}}).Select(bson.M{cartons : 1,"dateStr":1}).All(&result)
+
+//	c.Find(nil).All(&result)
+	return result
 }

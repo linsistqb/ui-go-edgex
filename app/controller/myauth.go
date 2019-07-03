@@ -31,6 +31,10 @@ const (
 	colorWeight = "colorweight"
 	car        = "car"
 	myData  = "date"
+	clean   = "clean"
+	startTime = "startTime"
+	endTime = "endTime"
+	cartons = "cartons"
 )
 
 func Debug(w http.ResponseWriter, r *http.Request){
@@ -110,7 +114,7 @@ func Proportion(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	data := m[myData]
-	fmt.Println(data)
+//	fmt.Println(data)
 
         var proportionResult map[string]interface{}
         proportionResult = mongo.FindWeightDBSelectOne(dbName,car,data)
@@ -118,4 +122,37 @@ func Proportion(w http.ResponseWriter, r *http.Request){
 
 	result, _ := json.Marshal(&proportionResult)
         w.Write(result)
+}
+
+	
+func  CleanDifferentialPressure(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+        log.Println("CleanDifferentialPressure!!!!!!!")
+	m := make (map[string]string)
+        err := json.NewDecoder(r.Body).Decode(&m)
+        if err != nil {
+                http.Error(w, err.Error(), http.StatusServiceUnavailable)
+                return
+        }
+
+	myStartTime := m[startTime]
+	myEndTime   := m[endTime]
+	myCartons   := m[cartons]
+	var findClean []map[string]interface{}
+	findClean = mongo.FindAListCartonsDifferentPressure(dbName,clean,myStartTime,myEndTime,myCartons)
+	cleanResult := make(map[string]string)
+	result := make(map[int](map[string]string))
+	for i := range findClean{
+		for key, value := range findClean[i]{
+			strkey := fmt.Sprintf("%v",key)
+               		strvalue := fmt.Sprintf("%v",value) 
+                       	cleanResult[strkey] = strvalue
+		}
+		result[i] =  cleanResult
+		cleanResult = make(map[string]string)
+
+	}
+
+	sendResult,_ := json.Marshal(&result)
+	w.Write(sendResult)
 }
