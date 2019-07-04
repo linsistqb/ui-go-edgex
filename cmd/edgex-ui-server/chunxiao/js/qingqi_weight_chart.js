@@ -66,6 +66,7 @@ function qingqi(){
                                 name:'左侧重量',
                                 type:'bar',
                                 data:[obj.BS11_1, obj.BS11_2, obj.BS11_3, obj.BS11_4, obj.BS11_5, obj.BS13_1, obj.BS13_2, obj.BS13_3, obj.BS13_4, obj.BS13_5, obj.BS15_1, obj.BS15_2, obj.BS15_3, obj.BS15_4]
+
                             },
                             {
                                 name:'右侧重量',
@@ -81,7 +82,6 @@ function qingqi(){
 
 }
         
-
 
 
 

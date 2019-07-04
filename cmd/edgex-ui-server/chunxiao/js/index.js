@@ -51,25 +51,41 @@
         });
         
         $.ajax({
-            url: '/api/v1/myauth/cleanDifferentialPressure',
+            url: '/api/v1/myauth/windSpeed',//风速趋势图
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                'startTime': "201904110003",
-                'endTime':"201904110005",
-                'cartons':"BS11_1"
+                'process' : "cleanwind",
+                'date': "20190416"    
+                }),
+            success: function(data) {
+                console.log(data);
+                var obj = JSON.parse(data);
+                console.log(obj)
+                }    
+        });
+ /*       
+        $.ajax({
+            url: '/api/v1/myauth/differentialPressure',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'process' : "clean",
+                'startTime' : "201904110000",
+                'endTime' :   "201904111440",
+                'cartons' : "BS11_1"
                 }),
             success: function(data) {
                 console.log(data);
                 var obj = JSON.parse(data);  
                 for (var key in obj)
                 {   
-                    console.log(obj[key].dateStr);
-                    setTime(obj[key].dateStr);
+                    console.log(obj);
+//                    setTime(obj[key].BS11_1);
                 }
             }
         });
-
+*/
     }
     
     
@@ -84,15 +100,13 @@
     }
    
    /*
-        var ddd = "2019-04-09 ";
-        console.log(ddd);
 
         $.ajax({
-            url: '/api/v1/myauth/proportion',
+            url: '/api/v1/myauth/proportion',//小修数
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                'date': ddd    
+                'date': "2019-04-09 "    
                 }),
             success: function(data) {
                 console.log(data);
@@ -103,17 +117,33 @@
     
 
         $.ajax({
-            url: '/api/v1/myauth/cleanDifferentialPressure',
+            url: '/api/v1/myauth/differentialPressure',//压差
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                'startTime': "201904110003",
-                'endTime':"201904110005",
-                'cantons':"BS11_1"
+                'process' : "clean",
+                'startTime' : "201904110000",
+                'endTime' :   "201904111440",
+                'cartons' : "BS11_1"
                 }),
             success: function(data) {
                 console.log(data);
                 var obj = JSON.parse(data);  
+        });
+        
+        $.ajax({
+            url: '/api/v1/myauth/windSpeed',//风速趋势图
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'process' : "cleanwind",
+                'date': "20190416"    
+                }),
+            success: function(data) {
+                console.log(data);
+                var obj = JSON.parse(data);
+                console.log(obj)
+                }    
         });
         
     

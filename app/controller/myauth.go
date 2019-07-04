@@ -30,11 +30,12 @@ const (
 	cleanWeight = "cleanweight"
 	colorWeight = "colorweight"
 	car        = "car"
-	myData  = "date"
+	date  = "date"
 	clean   = "clean"
 	startTime = "startTime"
 	endTime = "endTime"
-	cartons = "cartons"
+	cartons = "cartons"	
+	process = "process"
 )
 
 func Debug(w http.ResponseWriter, r *http.Request){
@@ -68,11 +69,10 @@ func Debug(w http.ResponseWriter, r *http.Request){
           mapString[strkey2]= strvalue2
       }
 
-    fmt.Println(mapString)
+//    fmt.Println(mapString)
 
 
     result, _ := json.Marshal(&mapString)
-
     w.Write(result)
 
 }
@@ -113,21 +113,21 @@ func Proportion(w http.ResponseWriter, r *http.Request){
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
 	}
-	data := m[myData]
+	date := m[date]
 //	fmt.Println(data)
 
         var proportionResult map[string]interface{}
-        proportionResult = mongo.FindWeightDBSelectOne(dbName,car,data)
-	fmt.Println(proportionResult)
+        proportionResult = mongo.FindTableSelectOne(dbName,car,date)
+//	fmt.Println(proportionResult)
 
 	result, _ := json.Marshal(&proportionResult)
         w.Write(result)
 }
 
 	
-func  CleanDifferentialPressure(w http.ResponseWriter, r *http.Request){
+func  DifferentialPressure(w http.ResponseWriter, r *http.Request){
 	defer r.Body.Close()
-        log.Println("CleanDifferentialPressure!!!!!!!")
+        log.Println("DifferentialPressure!!!")
 	m := make (map[string]string)
         err := json.NewDecoder(r.Body).Decode(&m)
         if err != nil {
@@ -135,11 +135,12 @@ func  CleanDifferentialPressure(w http.ResponseWriter, r *http.Request){
                 return
         }
 
-	myStartTime := m[startTime]
-	myEndTime   := m[endTime]
-	myCartons   := m[cartons]
+	process   := m[process]
+	startTime := m[startTime]
+	endTime   := m[endTime]
+	cartons   := m[cartons]
 	var findClean []map[string]interface{}
-	findClean = mongo.FindAListCartonsDifferentPressure(dbName,clean,myStartTime,myEndTime,myCartons)
+	findClean = mongo.FindAListCartonsDifferentPressure(dbName,process,startTime,endTime,cartons)
 	cleanResult := make(map[string]string)
 	result := make(map[int](map[string]string))
 	for i := range findClean{
@@ -152,7 +153,28 @@ func  CleanDifferentialPressure(w http.ResponseWriter, r *http.Request){
 		cleanResult = make(map[string]string)
 
 	}
-
+//	fmt.Println(result)
+//	fmt.Println("************************")
 	sendResult,_ := json.Marshal(&result)
 	w.Write(sendResult)
+}
+
+
+func WindSpeed(w http.ResponseWriter, r *http.Request){
+	defer r.Body.Close()
+	log.Println("WindSpeed!!!")
+	m := make(map[string]string)
+	err := json.NewDecoder(r.Body).Decode(&m)
+	if err != nil {
+		http.Error(w,err.Error(),http.StatusServiceUnavailable)
+		return 
+	}
+	process := m[process]
+	date    := m[date]
+	var wind map[string]interface{}
+	wind = mongo.FindTableSelectOne(dbName,process,date)	
+	
+	result , _ := json.Marshal(&wind)
+	w.Write(result)		
+
 }

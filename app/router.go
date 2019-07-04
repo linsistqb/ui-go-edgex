@@ -32,7 +32,8 @@ func InitRestRoutes() http.Handler {
 	s.HandleFunc("/myauth/debug", controller.Debug).Methods(http.MethodGet)
 	s.HandleFunc("/myauth/weight", controller.Weight).Methods(http.MethodGet)
 	s.HandleFunc("/myauth/proportion", controller.Proportion).Methods(http.MethodPost)
-	s.HandleFunc("/myauth/cleanDifferentialPressure", controller.CleanDifferentialPressure).Methods(http.MethodPost)
+	s.HandleFunc("/myauth/differentialPressure", controller.DifferentialPressure).Methods(http.MethodPost)
+	s.HandleFunc("/myauth/windSpeed", controller.WindSpeed).Methods(http.MethodPost)
 	s.HandleFunc("/auth/login", controller.Login).Methods(http.MethodPost)
 	s.HandleFunc("/auth/logout", controller.Logout).Methods(http.MethodGet)
 
