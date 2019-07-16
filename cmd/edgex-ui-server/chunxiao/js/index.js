@@ -64,42 +64,11 @@
                 console.log(obj)
                 }    
         });
- /*       
-        $.ajax({
-            url: '/api/v1/myauth/differentialPressure',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                'process' : "clean",
-                'startTime' : "201904110000",
-                'endTime' :   "201904111440",
-                'cartons' : "BS11_1"
-                }),
-            success: function(data) {
-                console.log(data);
-                var obj = JSON.parse(data);  
-                for (var key in obj)
-                {   
-                    console.log(obj);
-//                    setTime(obj[key].BS11_1);
-                }
-            }
-        });
-*/
-    }
+       
+
     
     
-    function setTime(dateStr)
-    {
-        data = parseInt(dateStr/10000);
-        hour = parseInt((dateStr - 10000*data)/60);
-        min  = dateStr-10000*data-60*hour;
-        console.log(data);
-        console.log(hour);
-        console.log(min);
-    }
    
-   /*
 
         $.ajax({
             url: '/api/v1/myauth/proportion',//小修数
@@ -128,7 +97,8 @@
                 }),
             success: function(data) {
                 console.log(data);
-                var obj = JSON.parse(data);  
+                var obj = JSON.parse(data); 
+		} 
         });
         
         $.ajax({
@@ -147,4 +117,4 @@
         });
         
     
-    */
+   } 
