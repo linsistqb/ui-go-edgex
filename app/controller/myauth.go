@@ -27,8 +27,8 @@ import (
 
 const (
 	dbName  = "train"
-	cleanWeight = "cleanweight"
-	colorWeight = "colorweight"
+	cleanweight = "cleanweight"
+	colorweight = "colorweight"
 	car        = "car"
 	date  = "date"
 	clean   = "clean"
@@ -84,7 +84,7 @@ func Weight( w http.ResponseWriter, r *http.Request){
 	resultString := make(map[string]string)
  
 	var cleanweightResult map[string]interface{}
-	cleanweightResult = mongo.FindWeightDBOne(dbName,cleanWeight)
+	cleanweightResult = mongo.FindWeightDBOne(dbName,cleanweight)
 	
 	for key, value := range cleanweightResult{
 		strkey := fmt.Sprintf("%v",key)
@@ -93,7 +93,7 @@ func Weight( w http.ResponseWriter, r *http.Request){
 	}
 
 	var colorweightResult map[string]interface{}
-	colorweightResult = mongo.FindWeightDBOne(dbName,colorWeight)
+	colorweightResult = mongo.FindWeightDBOne(dbName,colorweight)
 	
 	for key, value := range colorweightResult{
 		strkey := fmt.Sprintf("%v",key)
@@ -104,6 +104,40 @@ func Weight( w http.ResponseWriter, r *http.Request){
 	w.Write(result)
 }
 
+func SubsctionWeight(w http.ResponseWriter,r *http.Request){
+	defer r.Body.Close()
+	log.Println("SubsctionWeight!!!")
+        m := make (map[string]string)
+         err := json.NewDecoder(r.Body).Decode(&m)
+         if err != nil {
+                 http.Error(w, err.Error(), http.StatusServiceUnavailable)
+                 return
+         }
+ 
+         process   := m[process]
+         startTime := m[startTime]
+         endTime   := m[endTime]
+         cartons   := m[cartons]
+         var findSubsction []map[string]interface{}
+         findSubsction = mongo.FindAListCartonsDifferentPressure(dbName,process,startTime,endTime,cartons)
+         subsctionResult := make(map[string]string)
+         result := make(map[int](map[string]string))
+         for i := range findSubsction{
+                 for key, value := range findSubsction[i]{
+                         strkey := fmt.Sprintf("%v",key)
+                         strvalue := fmt.Sprintf("%v",value) 
+                         subsctionResult[strkey] = strvalue
+                 }
+                 result[i] =  subsctionResult
+                 subsctionResult = make(map[string]string)
+
+         }
+ //      fmt.Println(result)
+         sendResult,_ := json.Marshal(&result)
+         w.Write(sendResult)
+
+}
+	
 func Proportion(w http.ResponseWriter, r *http.Request){
 	defer r.Body.Close()
 	log.Println("Proportion!!")
@@ -124,7 +158,6 @@ func Proportion(w http.ResponseWriter, r *http.Request){
         w.Write(result)
 }
 
-	
 func  DifferentialPressure(w http.ResponseWriter, r *http.Request){
 	defer r.Body.Close()
         log.Println("DifferentialPressure!!!")

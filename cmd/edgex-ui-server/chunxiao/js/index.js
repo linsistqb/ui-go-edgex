@@ -49,6 +49,22 @@
 
 			}
         });
+
+         $.ajax({
+             url: '/api/v1/myauth/subsectionWeight',
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify({
+                 'process' : "cleanweight",
+                 'startTime' : "20190411",
+                 'endTime' :   "20190420",
+                 'cartons' : "BS11_1"
+                 }),
+             success: function(data) {
+                 console.log(data);
+                 var obj = JSON.parse(data);
+                 }
+         });
         
         $.ajax({
             url: '/api/v1/myauth/windSpeed',//风速趋势图
